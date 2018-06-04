@@ -1,8 +1,6 @@
  # Chaos Toolkit Driver for Spring Chaos.
 
-[![Python versions](https://img.shields.io/pypi/pyversions/chaostoolkit-spring.svg)](https://www.python.org/)
-
-[![Build Status](https://travis-ci.org/chaostoolkit-incubator/chaostoolkit-spring.svg?branch=master)](https://travis-ci.org/chaostoolkit-incubator/chaostoolkit-spring)
+[![Python versions](https://img.shields.io/pypi/pyversions/chaostoolkit-spring.svg)](https://www.python.org/) [![Build Status](https://travis-ci.org/chaostoolkit-incubator/chaostoolkit-spring.svg?branch=master)](https://travis-ci.org/chaostoolkit-incubator/chaostoolkit-spring)
 
 
 This project is a collection of [actions][] and [probes][], gathered as an
