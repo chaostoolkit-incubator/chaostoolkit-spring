@@ -47,10 +47,13 @@ def test_watcher_configuration():
         m.get(
             "http://localhost:8080/actuator/chaosmonkey/watcher",
             status_code=200,
-            text=json.dumps(text_response))
+            json=text_response)
 
         configuration = watcher_configuration(
             base_url="http://localhost:8080/actuator")
+        assert m.called
+        assert "service" in configuration
+        assert configuration["service"] == True
 
 
 def test_assaults_configuration():
@@ -68,9 +71,10 @@ def test_assaults_configuration():
         m.get(
             "http://localhost:8080/actuator/chaosmonkey/assaults",
             status_code=200,
-            text=json.dumps(text_response))
+            json=text_response)
 
         configuration = assaults_configuration(
             base_url="http://localhost:8080/actuator")
-
-    
+        assert m.called
+        assert "level" in configuration
+        assert configuration["level"] == 3
