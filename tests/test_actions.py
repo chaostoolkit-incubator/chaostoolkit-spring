@@ -41,6 +41,7 @@ def test_disable_chaosmonkey():
         enabled = disable_chaosmonkey(
             base_url="http://localhost:8080/actuator")
 
+
 def test_disable_chaosmonkey_fails():
     with requests_mock.mock() as m:
         m.post(

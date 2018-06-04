@@ -6,7 +6,8 @@ import pytest
 import requests
 import requests_mock
 
-from chaosspring.probes import chaosmonkey_enabled, watcher_configuration, assaults_configuration
+from chaosspring.probes import chaosmonkey_enabled, \
+    watcher_configuration, assaults_configuration
 
 
 def test_chaosmonkey_is_enabled():
@@ -20,6 +21,19 @@ def test_chaosmonkey_is_enabled():
             base_url="http://localhost:8080/actuator")
 
     assert enabled is True
+
+
+def test_chaosmonkey_is_enabled_fails():
+    with requests_mock.mock() as m:
+        m.get(
+            "http://localhost:8080/actuator/chaosmonkey/status",
+            status_code=404)
+
+        with pytest.raises(FailedActivity) as ex:
+            chaosmonkey_enabled(
+                base_url="http://localhost:8080/actuator")
+
+        assert "ChaosMonkey status enquiry failed" in str(ex)
 
 
 def test_chaosmonkey_not_enabled():
@@ -54,7 +68,20 @@ def test_watcher_configuration():
             base_url="http://localhost:8080/actuator")
         assert m.called
         assert "service" in configuration
-        assert configuration["service"] == True
+        assert configuration["service"] is True
+
+
+def test_watcher_configuration_fails():
+    with requests_mock.mock() as m:
+        m.get(
+            "http://localhost:8080/actuator/chaosmonkey/watcher",
+            status_code=404)
+
+        with pytest.raises(FailedActivity) as ex:
+            watcher_configuration(
+                base_url="http://localhost:8080/actuator")
+
+        assert "ChaosMonkey watcher enquiry failed" in str(ex)
 
 
 def test_assaults_configuration():
@@ -79,3 +106,16 @@ def test_assaults_configuration():
         assert m.called
         assert "level" in configuration
         assert configuration["level"] == 3
+
+
+def test_assaults_configuration_fails():
+    with requests_mock.mock() as m:
+        m.get(
+            "http://localhost:8080/actuator/chaosmonkey/assaults",
+            status_code=404)
+
+        with pytest.raises(FailedActivity) as ex:
+            assaults_configuration(
+                base_url="http://localhost:8080/actuator")
+
+        assert "ChaosMonkey assaults enquiry failed" in str(ex)
