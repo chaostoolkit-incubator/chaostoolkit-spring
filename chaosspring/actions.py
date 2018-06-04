@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
-
-import requests
-
 from chaoslib.types import Configuration, Secrets
+import requests
 
 __all__ = ["enable_chaosmonkey", "disable_chaosmonkey"]
 
