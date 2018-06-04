@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from chaoslib.exceptions import FailedActivity
 import json
 
 import pytest

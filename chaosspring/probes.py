@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from typing import Any, Dict
 
+from chaoslib.exceptions import FailedActivity
 from chaoslib.types import Configuration, Secrets
 import requests
 
