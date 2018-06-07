@@ -23,20 +23,74 @@ $ pip install -U chaostoolkit-spring
 
 ## Usage
 
+Currently this driver supports interactions with a [Spring Boot-based](https://spring.io/projects/spring-boot) service that has included the [2.0.0.-SNAPSHOT](https://codecentric.github.io/chaos-monkey-spring-boot/2.0.0-SNAPSHOT/) release of the [Chaos Monkey for Spring Boot](https://github.com/codecentric/chaos-monkey-spring-boot). This snapshot includes the necessary Spring Boot Actuator HTTP endpoints so that the Chaos Toolkit to interact with the chaos features at runtime.
+
+Once you have [added the Chaos Monkey for Spring Boot](https://codecentric.github.io/chaos-monkey-spring-boot/2.0.0-SNAPSHOT/#getting-started) and [enabled the Spring Boot Actuator HTTP endpoints](https://codecentric.github.io/chaos-monkey-spring-boot/2.0.0-SNAPSHOT/#endpoints) you can then use the probes and actions from this driver.
+
 To use the probes and actions from this package, add the following to your
 experiment file:
 
 ```json
+{
+    "name": "enable_chaosmonkey",
+    "provider": {
+        "arguments": {
+            "base_url": "http://localhost:8080/actuator"
+        },
+        "func": "enable_chaosmonkey",
+        "module": "chaosspring.actions",
+        "type": "python"
+    },
+    "type": "action"
+}
+```
 
+This will interact with the specified service and enable the Chaos Monkey features. You can also turn off the Chaos Monkey if you wish by specifying the following action:
 
+```json
+{
+    "name": "disable_chaosmonkey",
+    "provider": {
+        "arguments": {
+            "base_url": "http://localhost:8080/actuator"
+        },
+        "func": "disable_chaosmonkey",
+        "module": "chaosspring.actions",
+        "type": "python"
+    },
+    "type": "action"
+}
+```
+
+You can then manipulate the [Chaos Monkey assaults](https://codecentric.github.io/chaos-monkey-spring-boot/2.0.0-SNAPSHOT/#assaults) active on your service by specifing the following action:
+
+```json
+{
+    "name": "configure_assaults",
+    "provider": {
+        "arguments": {
+            "base_url": "http://localhost:8080/actuator",
+            "assaults_configuration": {
+                "level": 5,
+                "latencyRangeStart": 2000,
+                "latencyRangeEnd": 5000,
+                "latencyActive": false,
+                "exceptionsActive": false,
+                "killApplicationActive": true,
+                "restartApplicationActive": false
+            }
+        },
+        "func": "change_assaults_configuration",
+        "module": "chaosspring.actions",
+        "type": "python"
+    },
+    "type": "action"
+}
 ```
 
 That's it!
 
-Please explore the code to see existing probes and actions.
-
-## Configuration
-
+Please explore the code to use further probes and actions.
 
 ## Contribute
 

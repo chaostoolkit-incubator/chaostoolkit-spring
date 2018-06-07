@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from typing import Any, Dict
+import json
 
 from chaoslib.exceptions import FailedActivity
 from chaoslib.types import Configuration, Secrets
@@ -75,7 +76,9 @@ def change_assaults_configuration(base_url: str,
         params["timeout"] = timeout
 
     r = requests.post(
-        url, headers={"Accept": "application/json"}, params=params)
+        url, headers={"Accept": "application/json",
+                      "Content-Type": "application/json"},
+        data=json.dumps(assaults_configuration), params=params)
 
     if r.status_code != 200:
         raise FailedActivity(
