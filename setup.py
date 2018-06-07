@@ -1,10 +1,26 @@
 #!/usr/bin/env python
 """chaostoolkit-spring extension builder and installer"""
 
+import os
 import sys
 import io
 
 import setuptools
+
+
+def get_version_from_package() -> str:
+    """
+    Read the package version from the source without importing it.
+    """
+    path = os.path.join(os.path.dirname(__file__), "chaosspring/__init__.py")
+    path = os.path.normpath(os.path.abspath(path))
+    with open(path) as f:
+        for line in f:
+            if line.startswith("__version__"):
+                token, version = line.split(" = ", 1)
+                version = version.replace("'", "").strip()
+                return version
+
 
 name = 'chaostoolkit-spring'
 desc = 'Chaos Toolkit Driver for Spring Chaos.'
@@ -46,7 +62,7 @@ with io.open('requirements.txt') as f:
 
 setup_params = dict(
     name=name,
-    version='0.1.0',
+    version=get_version_from_package(),
     description=desc,
     long_description=long_desc,
     classifiers=classifiers,

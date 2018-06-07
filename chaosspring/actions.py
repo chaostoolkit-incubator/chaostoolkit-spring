@@ -14,7 +14,7 @@ def enable_chaosmonkey(base_url: str, timeout: float = None,
                        configuration: Configuration = None,
                        secrets: Secrets = None) -> str:
     """
-    Enable Chaos Monkey on a specific service
+    Enable Chaos Monkey on a specific service.
     """
 
     url = "{base_url}/chaosmonkey/enable".format(base_url=base_url)
@@ -38,7 +38,7 @@ def disable_chaosmonkey(base_url: str, timeout: float = None,
                         configuration: Configuration = None,
                         secrets: Secrets = None) -> str:
     """
-    Disable Chaos Monkey on a specific service
+    Disable Chaos Monkey on a specific service.
     """
 
     url = "{base_url}/chaosmonkey/disable".format(base_url=base_url)
@@ -64,7 +64,7 @@ def change_assaults_configuration(base_url: str,
                                   configuration: Configuration = None,
                                   secrets: Secrets = None) -> str:
     """
-    Change Assaults configuration on a specific service
+    Change Assaults configuration on a specific service.
     """
 
     url = "{base_url}/chaosmonkey/assaults".format(base_url=base_url)

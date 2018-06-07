@@ -42,7 +42,7 @@ def watcher_configuration(base_url: str, timeout: float = None,
                           configuration: Configuration = None,
                           secrets: Secrets = None) -> Dict[str, Any]:
     """
-    Get the current watcher configuraton on the specified service.
+    Get the current watcher configuraton from the specified service.
     """
 
     url = "{base_url}/chaosmonkey/watcher".format(base_url=base_url)
@@ -66,7 +66,7 @@ def assaults_configuration(base_url: str, timeout: float = None,
                            configuration: Configuration = None,
                            secrets: Secrets = None) -> Dict[str, Any]:
     """
-    Get the current assaults configuraton on the specified service.
+    Get the current assaults configuraton from the specified service.
     """
 
     url = "{base_url}/chaosmonkey/assaults".format(base_url=base_url)
