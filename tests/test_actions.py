@@ -1,61 +1,85 @@
 # -*- coding: utf-8 -*-
-from chaoslib.exceptions import FailedActivity
+from unittest import mock
+from unittest.mock import MagicMock
+
 import pytest
-import requests
-import requests_mock
+from chaoslib.exceptions import FailedActivity
+from requests import codes, Response
 
 from chaosspring.actions import enable_chaosmonkey, \
     disable_chaosmonkey, change_assaults_configuration
 
 
 def test_enable_chaosmonkey():
-    with requests_mock.mock() as m:
-        m.post(
-            "http://localhost:8080/actuator/chaosmonkey/enable",
-            status_code=200,
-            text="Chaos Monkey is enabled")
+    mock_response = MagicMock(Response, status_code=codes.ok, text="Chaos Monkey is enabled")
+    actuator_endpoint = "http://localhost:8080/actuator"
 
-        enabled = enable_chaosmonkey(
-            base_url="http://localhost:8080/actuator")
+    with mock.patch('chaosspring.api.call_api', return_value=mock_response) as mock_call_api:
+        text = enable_chaosmonkey(base_url=actuator_endpoint)
 
-    assert enabled == "Chaos Monkey is enabled"
+    mock_call_api.assert_called_once_with(base_url=actuator_endpoint,
+                                          api_endpoint="chaosmonkey/enable",
+                                          method="POST",
+                                          headers=None,
+                                          timeout=None,
+                                          configuration=None,
+                                          secrets=None)
+    assert text == "Chaos Monkey is enabled"
 
 
 def test_enable_chaosmonkey_fails():
-    with requests_mock.mock() as m:
-        m.post(
-            "http://localhost:8080/actuator/chaosmonkey/enable",
-            status_code=404)
+    mock_response = MagicMock(Response, status_code=codes.not_found, text="Not Found")
 
+    actuator_endpoint = "http://localhost:8080/actuator"
+
+    with mock.patch('chaosspring.api.call_api', return_value=mock_response) as mock_call_api:
         with pytest.raises(FailedActivity) as ex:
-            enable_chaosmonkey(
-                base_url="http://localhost:8080/actuator")
+            enable_chaosmonkey(base_url=actuator_endpoint)
 
-        assert "Enable ChaosMonkey failed" in str(ex)
+    mock_call_api.assert_called_once_with(base_url=actuator_endpoint,
+                                          api_endpoint="chaosmonkey/enable",
+                                          method="POST",
+                                          headers=None,
+                                          timeout=None,
+                                          configuration=None,
+                                          secrets=None)
+    assert "Enable ChaosMonkey failed" in str(ex)
 
 
 def test_disable_chaosmonkey():
-    with requests_mock.mock() as m:
-        m.post(
-            "http://localhost:8080/actuator/chaosmonkey/disable",
-            status_code=200,
-            text="Chaos Monkey is disabled")
+    mock_response = MagicMock(Response, status_code=codes.ok, text="Chaos Monkey is disabled")
+    actuator_endpoint = "http://localhost:8080/actuator"
 
-        enabled = disable_chaosmonkey(
-            base_url="http://localhost:8080/actuator")
+    with mock.patch('chaosspring.api.call_api', return_value=mock_response) as mock_call_api:
+        text = disable_chaosmonkey(base_url=actuator_endpoint)
+
+    mock_call_api.assert_called_once_with(base_url=actuator_endpoint,
+                                          api_endpoint="chaosmonkey/disable",
+                                          method="POST",
+                                          headers=None,
+                                          timeout=None,
+                                          configuration=None,
+                                          secrets=None)
+    assert text == "Chaos Monkey is disabled"
 
 
 def test_disable_chaosmonkey_fails():
-    with requests_mock.mock() as m:
-        m.post(
-            "http://localhost:8080/actuator/chaosmonkey/disable",
-            status_code=404)
+    mock_response = MagicMock(Response, status_code=codes.not_found, text="Not Found")
 
+    actuator_endpoint = "http://localhost:8080/actuator"
+
+    with mock.patch('chaosspring.api.call_api', return_value=mock_response) as mock_call_api:
         with pytest.raises(FailedActivity) as ex:
-            disable_chaosmonkey(
-                base_url="http://localhost:8080/actuator")
+            disable_chaosmonkey(base_url=actuator_endpoint)
 
-        assert "Disable ChaosMonkey failed" in str(ex)
+    mock_call_api.assert_called_once_with(base_url=actuator_endpoint,
+                                          api_endpoint="chaosmonkey/disable",
+                                          method="POST",
+                                          headers=None,
+                                          timeout=None,
+                                          configuration=None,
+                                          secrets=None)
+    assert "Disable ChaosMonkey failed" in str(ex)
 
 
 def test_change_assaults_configuration():
@@ -69,17 +93,22 @@ def test_change_assaults_configuration():
         "restartApplicationActive": False
     }
 
-    with requests_mock.mock() as m:
-        m.post(
-            "http://localhost:8080/actuator/chaosmonkey/assaults",
-            status_code=200,
-            text="Assault config has changed")
+    mock_response = MagicMock(Response, status_code=codes.ok, text="Assault config has changed")
 
-        changed = change_assaults_configuration(
-            base_url="http://localhost:8080/actuator",
-            assaults_configuration=assaults_configuration)
+    actuator_endpoint = "http://localhost:8080/actuator"
+    with mock.patch('chaosspring.api.call_api', return_value=mock_response) as mock_call_api:
+        changed = change_assaults_configuration(base_url=actuator_endpoint,
+                                                assaults_configuration=assaults_configuration)
 
-        assert changed == "Assault config has changed"
+    mock_call_api.assert_called_once_with(base_url=actuator_endpoint,
+                                          api_endpoint="chaosmonkey/assaults",
+                                          method="POST",
+                                          assaults_configuration=assaults_configuration,
+                                          headers=None,
+                                          timeout=None,
+                                          configuration=None,
+                                          secrets=None)
+    assert changed == "Assault config has changed"
 
 
 def test_change_assaults_configuration_fails():
@@ -93,14 +122,20 @@ def test_change_assaults_configuration_fails():
         "restartApplicationActive": False
     }
 
-    with requests_mock.mock() as m:
-        m.post(
-            "http://localhost:8080/actuator/chaosmonkey/assaults",
-            status_code=404)
+    mock_response = MagicMock(Response, status_code=codes.not_found, text="Not Found")
 
+    actuator_endpoint = "http://localhost:8080/actuator"
+
+    with mock.patch('chaosspring.api.call_api', return_value=mock_response) as mock_call_api:
         with pytest.raises(FailedActivity) as ex:
-            change_assaults_configuration(
-                base_url="http://localhost:8080/actuator",
-                assaults_configuration=assaults_configuration)
+            change_assaults_configuration(base_url=actuator_endpoint, assaults_configuration=assaults_configuration)
 
-        assert "Change ChaosMonkey Assaults Configuration failed" in str(ex)
+    mock_call_api.assert_called_once_with(base_url=actuator_endpoint,
+                                          api_endpoint="chaosmonkey/assaults",
+                                          method="POST",
+                                          assaults_configuration=assaults_configuration,
+                                          headers=None,
+                                          timeout=None,
+                                          configuration=None,
+                                          secrets=None)
+    assert "Change ChaosMonkey Assaults Configuration failed" in str(ex)
