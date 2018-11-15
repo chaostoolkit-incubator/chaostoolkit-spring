@@ -4,6 +4,11 @@
 
 [Unreleased]: https://github.com/chaostoolkit-incubator/chaostoolkit-spring/compare/0.1.0...0.1.1
 
+### Added
+
+- fixed the bug on chaosmonkey_enabled probes when chaosmonkey not enabled.
+- refactoring the code to remove duplicate requests calling
+
 ## [0.1.1][] - 2018-07-06
 
 [0.1.1]: https://github.com/chaostoolkit-incubator/chaostoolkit-spring/compare/0.1.0...0.1.1
