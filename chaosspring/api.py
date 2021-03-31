@@ -48,8 +48,19 @@ def call_api(base_url: str,
         data = json.dumps(assaults_configuration)
         headers.update({"Content-Type": "application/json"})
 
-    return requests.request(method=method,
-                            url=url,
-                            params=params,
-                            data=data,
-                            headers=headers)
+    if secrets:
+        username = secrets.get("username")
+        password = secrets.get("password")
+        return requests.request(method=method,
+                                url=url,
+                                params=params,
+                                data=data,
+                                headers=headers,
+                                auth=(username, password))
+
+    else:
+        return requests.request(method=method,
+                                url=url,
+                                params=params,
+                                data=data,
+                                headers=headers)
