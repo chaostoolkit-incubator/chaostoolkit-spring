@@ -106,3 +106,25 @@ def test_call_api_post_with_assaults_configuration():
 
     assert response.status_code == codes.ok
     assert response.text == "Chaos Monkey assaults configuration changed!"
+
+def test_call_api_get_with_basic_auth_secrets():
+    with requests_mock.mock() as m:
+        m.request(
+            "GET",
+            "http://localhost:8080/actuator/chaosmonkey/status",
+            status_code=codes.ok,
+            text="Ready to be evil!")
+
+        response = call_api(
+            base_url="http://localhost:8080/actuator",
+            api_endpoint="chaosmonkey/status",
+            assaults_configuration=None,
+            timeout=None,
+            configuration=None,
+            secrets={
+                "username":"user",
+                "password":"pass"
+            })
+
+    assert response.status_code == codes.ok
+    assert response.text == "Ready to be evil!"
