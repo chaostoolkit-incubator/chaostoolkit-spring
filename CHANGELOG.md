@@ -15,6 +15,7 @@
 
 * Makefile to abstract away common development tasks
 * GitHub Actions workflows
+* Added `verify_ssl` argument to probes and actions to allow for disabling SSL verification
 
 ## [0.2.0][] - 2018-11-20
 
