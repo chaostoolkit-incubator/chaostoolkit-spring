@@ -28,8 +28,8 @@ def call_api(
     :param assaults_configuration: assaults configuration to change spring
             boot chaos monkey setting
     :param timeout: the waiting time before connection timeout
-    :param verify: bool representing whether requests verifies the SSL certificate of
-        the url (For providing trusted CAs, see
+    :param verify: bool representing whether requests performs SSL Verification
+        (For providing trusted CAs, see
         https://github.com/chaostoolkit-incubator/chaostoolkit-spring#ssl-verification)
     :param configuration: It provides runtime value to actions and probes in
             Key/value, it may contains platform
