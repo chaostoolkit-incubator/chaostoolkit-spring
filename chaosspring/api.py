@@ -35,9 +35,7 @@ def call_api(
     :return: return requests.Response
     """
 
-    url = "{base_url}/{api_endpoint}".format(
-        base_url=base_url, api_endpoint=api_endpoint
-    )
+    url = f"{base_url}/{api_endpoint}"
 
     headers = headers or {}
     headers.setdefault("Accept", "application/json")

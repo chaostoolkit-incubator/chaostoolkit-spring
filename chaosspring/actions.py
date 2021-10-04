@@ -88,9 +88,7 @@ def change_assaults_configuration(
 
     if response.status_code != codes.ok:
         raise FailedActivity(
-            "Change ChaosMonkey Assaults Configuration failed: {m}".format(
-                m=response.text
-            )
+            f"Change ChaosMonkey Assaults Configuration failed: {response.text}"
         )
 
     return response.text
