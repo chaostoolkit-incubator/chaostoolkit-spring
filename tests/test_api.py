@@ -10,7 +10,8 @@ def test_call_api_get():
             "GET",
             "http://localhost:8080/actuator/chaosmonkey/status",
             status_code=codes.ok,
-            text="Ready to be evil!")
+            text="Ready to be evil!",
+        )
 
         response = call_api(
             base_url="http://localhost:8080/actuator",
@@ -18,7 +19,8 @@ def test_call_api_get():
             assaults_configuration=None,
             timeout=3000,
             configuration=None,
-            secrets=None)
+            secrets=None,
+        )
 
     assert response.status_code == codes.ok
     assert response.text == "Ready to be evil!"
@@ -30,7 +32,8 @@ def test_call_api_post():
             "POST",
             "http://localhost:8080/actuator/chaosmonkey/enable",
             status_code=codes.ok,
-            text="Chaos Monkey is enabled")
+            text="Chaos Monkey is enabled",
+        )
 
         response = call_api(
             base_url="http://localhost:8080/actuator",
@@ -39,15 +42,18 @@ def test_call_api_post():
             assaults_configuration=None,
             timeout=None,
             configuration=None,
-            secrets=None)
+            secrets=None,
+        )
 
     assert response.status_code == codes.ok
     assert response.text == "Chaos Monkey is enabled"
 
 
 def test_call_api_get_with_header_extension():
-    request_headers = {"Accept": "application/json",
-               "X-CF-APP-INSTANCE": "d5e95e17-9ed0-40ec-bdf0-a5d9cd298e87:1"}
+    request_headers = {
+        "Accept": "application/json",
+        "X-CF-APP-INSTANCE": "d5e95e17-9ed0-40ec-bdf0-a5d9cd298e87:1",
+    }
 
     headers = {"X-CF-APP-INSTANCE": "d5e95e17-9ed0-40ec-bdf0-a5d9cd298e87:1"}
 
@@ -57,7 +63,8 @@ def test_call_api_get_with_header_extension():
             "http://localhost:8080/actuator/chaosmonkey/status",
             request_headers=request_headers,
             status_code=codes.ok,
-            text="Ready to be evil!")
+            text="Ready to be evil!",
+        )
 
         response = call_api(
             base_url="http://localhost:8080/actuator",
@@ -66,7 +73,8 @@ def test_call_api_get_with_header_extension():
             assaults_configuration=None,
             timeout=None,
             configuration=None,
-            secrets=None)
+            secrets=None,
+        )
 
     assert response.status_code == codes.ok
     assert response.text == "Ready to be evil!"
@@ -80,10 +88,9 @@ def test_call_api_post_with_assaults_configuration():
         "latencyActive": True,
         "exceptionsActive": True,
         "killApplicationActive": False,
-        "restartApplicationActive": False
+        "restartApplicationActive": False,
     }
-    request_headers = {"Accept": "application/json",
-                       "Content-Type": "application/json"}
+    request_headers = {"Accept": "application/json", "Content-Type": "application/json"}
 
     with requests_mock.mock() as m:
         m.request(
@@ -91,7 +98,8 @@ def test_call_api_post_with_assaults_configuration():
             "http://localhost:8080/actuator/chaosmonkey/assaults",
             request_headers=request_headers,
             status_code=codes.ok,
-            text="Chaos Monkey assaults configuration changed!")
+            text="Chaos Monkey assaults configuration changed!",
+        )
 
         response = call_api(
             base_url="http://localhost:8080/actuator",
@@ -100,7 +108,8 @@ def test_call_api_post_with_assaults_configuration():
             assaults_configuration=assaults_configuration,
             timeout=None,
             configuration=None,
-            secrets=None)
+            secrets=None,
+        )
 
     assert response.status_code == codes.ok
     assert response.text == "Chaos Monkey assaults configuration changed!"
