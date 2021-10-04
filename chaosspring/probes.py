@@ -13,6 +13,7 @@ def chaosmonkey_enabled(
     base_url: str,
     headers: Dict[str, Any] = None,
     timeout: float = None,
+    verify_ssl: bool = True,
     configuration: Configuration = None,
     secrets: Secrets = None,
 ) -> bool:
@@ -26,6 +27,7 @@ def chaosmonkey_enabled(
         api_endpoint="chaosmonkey/status",
         headers=headers,
         timeout=timeout,
+        verify=verify_ssl,
         configuration=configuration,
         secrets=secrets,
     )
@@ -42,6 +44,7 @@ def watcher_configuration(
     base_url: str,
     headers: Dict[str, Any] = None,
     timeout: float = None,
+    verify_ssl: bool = True,
     configuration: Configuration = None,
     secrets: Secrets = None,
 ) -> Dict[str, Any]:
@@ -54,6 +57,7 @@ def watcher_configuration(
         api_endpoint="chaosmonkey/watcher",
         headers=headers,
         timeout=timeout,
+        verify=verify_ssl,
         configuration=configuration,
         secrets=secrets,
     )
@@ -68,6 +72,7 @@ def assaults_configuration(
     base_url: str,
     headers: Dict[str, Any] = None,
     timeout: float = None,
+    verify_ssl: bool = True,
     configuration: Configuration = None,
     secrets: Secrets = None,
 ) -> Dict[str, Any]:
@@ -80,6 +85,7 @@ def assaults_configuration(
         api_endpoint="chaosmonkey/assaults",
         headers=headers,
         timeout=timeout,
+        verify=verify_ssl,
         configuration=configuration,
         secrets=secrets,
     )
