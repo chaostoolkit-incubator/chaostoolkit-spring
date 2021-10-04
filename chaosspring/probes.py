@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from typing import Any, Dict
 
 from chaoslib.exceptions import FailedActivity
@@ -35,7 +34,7 @@ def chaosmonkey_enabled(base_url: str,
         return False
     else:
         raise FailedActivity(
-            "ChaosMonkey status enquiry failed: {m}".format(m=response.text))
+            f"ChaosMonkey status enquiry failed: {response.text}")
 
 
 def watcher_configuration(base_url: str,
@@ -56,7 +55,7 @@ def watcher_configuration(base_url: str,
 
     if response.status_code != codes.ok:
         raise FailedActivity(
-            "ChaosMonkey watcher enquiry failed: {m}".format(m=response.text))
+            f"ChaosMonkey watcher enquiry failed: {response.text}")
 
     return response.json()
 
@@ -79,6 +78,6 @@ def assaults_configuration(base_url: str,
 
     if response.status_code != codes.ok:
         raise FailedActivity(
-            "ChaosMonkey assaults enquiry failed: {m}".format(m=response.text))
+            f"ChaosMonkey assaults enquiry failed: {response.text}")
 
     return response.json()

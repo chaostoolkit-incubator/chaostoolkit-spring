@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from typing import Any, Dict
 
 from chaoslib.exceptions import FailedActivity
@@ -31,7 +30,7 @@ def enable_chaosmonkey(base_url: str,
 
     if response.status_code != codes.ok:
         raise FailedActivity(
-            "Enable ChaosMonkey failed: {m}".format(m=response.text))
+            f"Enable ChaosMonkey failed: {response.text}")
 
     return response.text
 
@@ -55,7 +54,7 @@ def disable_chaosmonkey(base_url: str,
 
     if response.status_code != codes.ok:
         raise FailedActivity(
-            "Disable ChaosMonkey failed: {m}".format(m=response.text))
+            f"Disable ChaosMonkey failed: {response.text}")
 
     return response.text
 
