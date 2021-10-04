@@ -1,20 +1,22 @@
 import json
-from typing import Dict, Any
+from typing import Any, Dict
 
 import requests
 from chaoslib.types import Configuration, Secrets
 from requests import Response
 
 
-def call_api(base_url: str,
-             api_endpoint: str,
-             method: str = "GET",
-             assaults_configuration: Dict[str, Any] = None,
-             headers: Dict[str, Any] = None,
-             timeout: float = None,
-             configuration: Configuration = None,
-             secrets: Secrets = None) -> Response:
-    """ common http api call to spring boot chaos monkey. Both actions and
+def call_api(
+    base_url: str,
+    api_endpoint: str,
+    method: str = "GET",
+    assaults_configuration: Dict[str, Any] = None,
+    headers: Dict[str, Any] = None,
+    timeout: float = None,
+    configuration: Configuration = None,
+    secrets: Secrets = None,
+) -> Response:
+    """common http api call to spring boot chaos monkey. Both actions and
     probes call spring boot chaos monkey rest api by using this function.
 
     :param base_url: base url of target application
@@ -33,8 +35,7 @@ def call_api(base_url: str,
     :return: return requests.Response
     """
 
-    url = "{base_url}/{api_endpoint}".format(
-        base_url=base_url, api_endpoint=api_endpoint)
+    url = f"{base_url}/{api_endpoint}"
 
     headers = headers or {}
     headers.setdefault("Accept", "application/json")
@@ -48,8 +49,6 @@ def call_api(base_url: str,
         data = json.dumps(assaults_configuration)
         headers.update({"Content-Type": "application/json"})
 
-    return requests.request(method=method,
-                            url=url,
-                            params=params,
-                            data=data,
-                            headers=headers)
+    return requests.request(
+        method=method, url=url, params=params, data=data, headers=headers
+    )
