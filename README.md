@@ -92,6 +92,15 @@ That's it!
 
 Please explore the code to use further probes and actions.
 
+### SSL Verification
+
+If you do not wish to have SSL Verification performed during your actions/probes
+then you can pass the argument `"verify_ssl": false` to the individual activities.
+
+If you wish to provide a `CA_BUNDLE` or directory of trusted CAs certificates,
+provide the environment variables specified in the `requests` documentation here:
+[Requests SSL Cert Verification](https://docs.python-requests.org/en/latest/user/advanced/#ssl-cert-verification).
+
 ## Contribute
 
 If you wish to contribute more functions to this package, you are more than
