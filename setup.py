@@ -3,8 +3,6 @@
 
 import os
 import sys
-import io
-
 import setuptools
 
 
@@ -25,7 +23,7 @@ def get_version_from_package() -> str:
 name = 'chaostoolkit-spring'
 desc = 'Chaos Toolkit Driver for Spring Chaos.'
 
-with io.open('README.md', encoding='utf-8') as strm:
+with open('README.md', encoding='utf-8') as strm:
     long_desc = strm.read()
 
 classifiers = [
@@ -36,8 +34,10 @@ classifiers = [
     'License :: OSI Approved :: Apache Software License',
     'Programming Language :: Python',
     'Programming Language :: Python :: 3',
-    'Programming Language :: Python :: 3.5',
     'Programming Language :: Python :: 3.6',
+    'Programming Language :: Python :: 3.7',
+    'Programming Language :: Python :: 3.8',
+    'Programming Language :: Python :: 3.9',
     'Programming Language :: Python :: Implementation',
     'Programming Language :: Python :: Implementation :: CPython'
 ]
@@ -49,22 +49,23 @@ packages = [
     'chaosspring'
 ]
 
-needs_pytest = set(['pytest', 'test']).intersection(sys.argv)
+needs_pytest = {'pytest', 'test'}.intersection(sys.argv)
+
+install_require = []
+with open('requirements.txt') as f:
+    install_require = [l.strip() for l in f if not l.startswith('#')]
 pytest_runner = ['pytest_runner'] if needs_pytest else []
 
 test_require = []
-with io.open('requirements-dev.txt') as f:
+with open('requirements-dev.txt') as f:
     test_require = [l.strip() for l in f if not l.startswith('#')]
-
-install_require = []
-with io.open('requirements.txt') as f:
-    install_require = [l.strip() for l in f if not l.startswith('#')]
 
 setup_params = dict(
     name=name,
     version=get_version_from_package(),
     description=desc,
     long_description=long_desc,
+    long_description_content_type='text/markdown',
     classifiers=classifiers,
     author=author,
     author_email=author_email,
@@ -75,7 +76,7 @@ setup_params = dict(
     install_requires=install_require,
     tests_require=test_require,
     setup_requires=pytest_runner,
-    python_requires='>=3.5.*'
+    python_requires='>=3.6.*'
 )
 
 

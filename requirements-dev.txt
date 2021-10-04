@@ -1,4 +1,7 @@
+black
 coverage
+flake8
+isort
 pycodestyle
 pytest>=2.8
 pytest-cov
