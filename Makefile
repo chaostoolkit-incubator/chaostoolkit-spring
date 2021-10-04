@@ -7,10 +7,6 @@ install-dev: install
 	pip install -r requirements-dev.txt
 	python setup.py develop
 
-.PHONY: build
-build:
-	python3 setup.py build
-
 .PHONY: lint
 lint:
 	flake8 chaosspring/ tests/
