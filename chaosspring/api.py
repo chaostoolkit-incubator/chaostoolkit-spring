@@ -13,6 +13,7 @@ def call_api(
     assaults_configuration: Dict[str, Any] = None,
     headers: Dict[str, Any] = None,
     timeout: float = None,
+    verify: bool = True,
     configuration: Configuration = None,
     secrets: Secrets = None,
 ) -> Response:
@@ -27,6 +28,9 @@ def call_api(
     :param assaults_configuration: assaults configuration to change spring
             boot chaos monkey setting
     :param timeout: the waiting time before connection timeout
+    :param verify: bool representing whether requests performs SSL Verification
+        (For providing trusted CAs, see
+        https://github.com/chaostoolkit-incubator/chaostoolkit-spring#ssl-verification)
     :param configuration: It provides runtime value to actions and probes in
             Key/value, it may contains platform
                     specific api parameters.
@@ -40,7 +44,7 @@ def call_api(
     headers = headers or {}
     headers.setdefault("Accept", "application/json")
 
-    params = {}
+    params = {"verify": verify}
     if timeout:
         params["timeout"] = timeout
 

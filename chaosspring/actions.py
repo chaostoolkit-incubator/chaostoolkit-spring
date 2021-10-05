@@ -13,6 +13,7 @@ def enable_chaosmonkey(
     base_url: str,
     headers: Dict[str, Any] = None,
     timeout: float = None,
+    verify_ssl: bool = True,
     configuration: Configuration = None,
     secrets: Secrets = None,
 ) -> str:
@@ -26,6 +27,7 @@ def enable_chaosmonkey(
         method="POST",
         headers=headers,
         timeout=timeout,
+        verify=verify_ssl,
         configuration=configuration,
         secrets=secrets,
     )
@@ -40,6 +42,7 @@ def disable_chaosmonkey(
     base_url: str,
     headers: Dict[str, Any] = None,
     timeout: float = None,
+    verify_ssl: bool = True,
     configuration: Configuration = None,
     secrets: Secrets = None,
 ) -> str:
@@ -53,6 +56,7 @@ def disable_chaosmonkey(
         method="POST",
         headers=headers,
         timeout=timeout,
+        verify=verify_ssl,
         configuration=configuration,
         secrets=secrets,
     )
@@ -68,6 +72,7 @@ def change_assaults_configuration(
     assaults_configuration: Dict[str, Any],
     headers: Dict[str, Any] = None,
     timeout: float = None,
+    verify_ssl: bool = True,
     configuration: Configuration = None,
     secrets: Secrets = None,
 ) -> str:
@@ -82,6 +87,7 @@ def change_assaults_configuration(
         assaults_configuration=assaults_configuration,
         headers=headers,
         timeout=timeout,
+        verify=verify_ssl,
         configuration=configuration,
         secrets=secrets,
     )

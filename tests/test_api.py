@@ -1,5 +1,8 @@
+from unittest.mock import MagicMock, Mock, patch
+
 import requests_mock
 from requests import codes
+from requests.models import Response
 
 from chaosspring.api import call_api
 
@@ -24,6 +27,65 @@ def test_call_api_get():
 
     assert response.status_code == codes.ok
     assert response.text == "Ready to be evil!"
+
+
+@patch("chaosspring.api.requests.request", autospec=True)
+def test_call_api_without_verification(mocked_request: MagicMock):
+    mock_resp = Mock(Response)
+    expected_status_code = codes.ok
+    expected_text = "Ready to be evil"
+    mock_resp.status_code = expected_status_code
+    mock_resp.text = expected_text
+    mocked_request.return_value = mock_resp
+    response = call_api(
+        base_url="http://localhost:8080/actuator",
+        api_endpoint="chaosmonkey/status",
+        assaults_configuration=None,
+        timeout=3000,
+        verify=False,
+        configuration=None,
+        secrets=None,
+    )
+
+    assert response.status_code == expected_status_code
+    assert response.text == expected_text
+
+    mocked_request.assert_called_once_with(
+        method="GET",
+        url="http://localhost:8080/actuator/chaosmonkey/status",
+        params={"timeout": 3000, "verify": False},
+        data=None,
+        headers={"Accept": "application/json"},
+    )
+
+
+@patch("chaosspring.api.requests.request", autospec=True)
+def test_call_api_with_verification(mocked_request: MagicMock):
+    mock_resp = Mock(Response)
+    expected_status_code = codes.ok
+    expected_text = "Ready to be evil"
+    mock_resp.status_code = expected_status_code
+    mock_resp.text = expected_text
+    mocked_request.return_value = mock_resp
+    response = call_api(
+        base_url="http://localhost:8080/actuator",
+        api_endpoint="chaosmonkey/status",
+        assaults_configuration=None,
+        timeout=3000,
+        configuration=None,
+        secrets=None,
+    )
+
+    assert response.status_code == expected_status_code
+    assert response.text == expected_text
+
+    mocked_request.assert_called_once_with(
+        method="GET",
+        url="http://localhost:8080/actuator/chaosmonkey/status",
+        params={"timeout": 3000, "verify": True},
+        data=None,
+        headers={"Accept": "application/json"},
+    )
 
 
 def test_call_api_post():
