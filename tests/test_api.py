@@ -53,9 +53,10 @@ def test_call_api_without_verification(mocked_request: MagicMock):
     mocked_request.assert_called_once_with(
         method="GET",
         url="http://localhost:8080/actuator/chaosmonkey/status",
-        params={"timeout": 3000, "verify": False},
+        params={"timeout": 3000},
         data=None,
         headers={"Accept": "application/json"},
+        verify=False,
     )
 
 
@@ -82,9 +83,10 @@ def test_call_api_with_verification(mocked_request: MagicMock):
     mocked_request.assert_called_once_with(
         method="GET",
         url="http://localhost:8080/actuator/chaosmonkey/status",
-        params={"timeout": 3000, "verify": True},
+        params={"timeout": 3000},
         data=None,
         headers={"Accept": "application/json"},
+        verify=True,
     )
 
 
