@@ -4,6 +4,10 @@
 
 [Unreleased]: https://github.com/chaostoolkit-incubator/chaostoolkit-spring/compare/0.3.0...HEAD
 
+### Fixed:
+
+* `verify` parameter now passed as a `requests` parameter and not a query param
+
 ## [0.3.0][] - 2021-10-05
 
 [0.3.0]: https://github.com/chaostoolkit-incubator/chaostoolkit-spring/compare/0.2.0...0.3.0

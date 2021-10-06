@@ -44,7 +44,7 @@ def call_api(
     headers = headers or {}
     headers.setdefault("Accept", "application/json")
 
-    params = {"verify": verify}
+    params = {}
     if timeout:
         params["timeout"] = timeout
 
@@ -54,5 +54,5 @@ def call_api(
         headers.update({"Content-Type": "application/json"})
 
     return requests.request(
-        method=method, url=url, params=params, data=data, headers=headers
+        method=method, url=url, params=params, data=data, headers=headers, verify=verify
     )
