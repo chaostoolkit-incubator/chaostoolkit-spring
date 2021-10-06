@@ -2,7 +2,11 @@
 
 ## [Unreleased][]
 
-[Unreleased]: https://github.com/chaostoolkit-incubator/chaostoolkit-spring/compare/0.3.0...HEAD
+[Unreleased]: https://github.com/chaostoolkit-incubator/chaostoolkit-spring/compare/0.3.1...HEAD
+
+## [0.3.1][] - 2021-10-06
+
+[0.3.1]: https://github.com/chaostoolkit-incubator/chaostoolkit-spring/compare/0.3.0...0.3.1
 
 ### Fixed:
 
