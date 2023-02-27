@@ -8,20 +8,20 @@ on:
 
 jobs:
   release-to-pypi:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Set up Python
-      uses: actions/setup-python@v1
+      uses: actions/setup-python@v4
       with:
-        python-version: '3.6'
+        python-version: '3.7'
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install --upgrade setuptools wheel twine
     - name: Build and publish
       env:
-        TWINE_USERNAME: chaostoolkit
+        TWINE_USERNAME: __token__
         TWINE_PASSWORD: ${{ secrets.PYPI_PWD }}
       run: |
         python3 setup.py release
@@ -30,10 +30,10 @@ jobs:
       uses: actions/upload-artifact@v2-preview
       with:
         name: chaostoolkit-spring-packages
-        path: dist/chaostoolkit_spring-*
+        path: dist/chaostoolkit*
 
   create-gh-release:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Create Release
         uses: actions/create-release@latest
@@ -46,7 +46,7 @@ jobs:
           prerelease: false
 
   upload-gh-release-assets:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     needs:
       - create-gh-release
       - release-to-pypi

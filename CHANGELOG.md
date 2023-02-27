@@ -2,7 +2,17 @@
 
 ## [Unreleased][]
 
-[Unreleased]: https://github.com/chaostoolkit-incubator/chaostoolkit-spring/compare/0.3.1...HEAD
+[Unreleased]: https://github.com/chaostoolkit-incubator/chaostoolkit-spring/compare/0.3.2...HEAD
+
+## [0.3.2][] - 2023-02-27
+
+[0.3.2]: https://github.com/chaostoolkit-incubator/chaostoolkit-spring/compare/0.3.1...0.3.2
+
+### Changed
+
+- Updated build system
+- Requires Python 3.7 as other packages
+
 
 ## [0.3.1][] - 2021-10-06
 
