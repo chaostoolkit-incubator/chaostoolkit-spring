@@ -98,3 +98,37 @@ def change_assaults_configuration(
         )
 
     return response.text
+
+
+def change_watchers_configuration(
+    base_url: str,
+    watchers_configuration: Dict[str, Any],
+    headers: Dict[str, Any] = None,
+    timeout: float = None,
+    verify_ssl: bool = True,
+    configuration: Configuration = None,
+    secrets: Secrets = None,
+) -> str:
+    """
+    Change Watchers configuration on a specific service.
+    """
+
+    response = api.call_api(
+        base_url=base_url,
+        # Is chaosmonkey/watcher in Chaos Monkey for Spring Boot 2.0.0.-SNAPSHOT
+        api_endpoint="chaosmonkey/watchers",
+        method="POST",
+        watchers_configuration=watchers_configuration,
+        headers=headers,
+        timeout=timeout,
+        verify=verify_ssl,
+        configuration=configuration,
+        secrets=secrets,
+    )
+
+    if response.status_code != codes.ok:
+        raise FailedActivity(
+            f"Change ChaosMonkey Assaults Configuration failed: {response.text}"
+        )
+
+    return response.text
