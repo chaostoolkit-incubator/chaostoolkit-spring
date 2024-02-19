@@ -7,6 +7,7 @@ from requests import Response, codes
 
 from chaosspring.actions import (
     change_assaults_configuration,
+    change_watchers_configuration,
     disable_chaosmonkey,
     enable_chaosmonkey,
 )
@@ -261,6 +262,89 @@ def test_change_assaults_configuration_fails():
         api_endpoint="chaosmonkey/assaults",
         method="POST",
         assaults_configuration=assaults_configuration,
+        headers=None,
+        timeout=None,
+        verify=True,
+        configuration=None,
+        secrets=None,
+    )
+    assert "Change ChaosMonkey Assaults Configuration failed" in str(ex)
+
+
+def test_change_watchers_configuration():
+    watchers_configuration = {
+        "controller": False,
+        "restController": False,
+        "service": True,
+        "repository": False,
+        "component": False,
+        "restTemplate": False,
+        "webClient": False,
+        "actuatorHealth": False,
+        "beans": [],
+        "beanClasses": [],
+        "excludeClasses": [],
+    }
+
+    mock_response = MagicMock(
+        Response, status_code=codes.ok, text="Watcher config has changed"
+    )
+
+    actuator_endpoint = "http://localhost:8080/actuator"
+    with mock.patch(
+        "chaosspring.api.call_api", return_value=mock_response
+    ) as mock_call_api:
+        changed = change_watchers_configuration(
+            base_url=actuator_endpoint, watchers_configuration=watchers_configuration
+        )
+
+    mock_call_api.assert_called_once_with(
+        base_url=actuator_endpoint,
+        api_endpoint="chaosmonkey/watchers",
+        method="POST",
+        watchers_configuration=watchers_configuration,
+        headers=None,
+        timeout=None,
+        verify=True,
+        configuration=None,
+        secrets=None,
+    )
+    assert changed == "Watcher config has changed"
+
+
+def test_change_watchers_configuration_fails():
+    watchers_configuration = {
+        "controller": False,
+        "restController": False,
+        "service": True,
+        "repository": False,
+        "component": False,
+        "restTemplate": False,
+        "webClient": False,
+        "actuatorHealth": False,
+        "beans": [],
+        "beanClasses": [],
+        "excludeClasses": [],
+    }
+
+    mock_response = MagicMock(Response, status_code=codes.not_found, text="Not Found")
+
+    actuator_endpoint = "http://localhost:8080/actuator"
+
+    with mock.patch(
+        "chaosspring.api.call_api", return_value=mock_response
+    ) as mock_call_api:
+        with pytest.raises(FailedActivity) as ex:
+            change_watchers_configuration(
+                base_url=actuator_endpoint,
+                watchers_configuration=watchers_configuration,
+            )
+
+    mock_call_api.assert_called_once_with(
+        base_url=actuator_endpoint,
+        api_endpoint="chaosmonkey/watchers",
+        method="POST",
+        watchers_configuration=watchers_configuration,
         headers=None,
         timeout=None,
         verify=True,

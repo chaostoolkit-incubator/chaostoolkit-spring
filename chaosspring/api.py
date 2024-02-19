@@ -11,6 +11,7 @@ def call_api(
     api_endpoint: str,
     method: str = "GET",
     assaults_configuration: Dict[str, Any] = None,
+    watchers_configuration: Dict[str, Any] = None,
     headers: Dict[str, Any] = None,
     timeout: float = None,
     verify: bool = True,
@@ -51,6 +52,10 @@ def call_api(
     data = None
     if assaults_configuration:
         data = json.dumps(assaults_configuration)
+        headers.update({"Content-Type": "application/json"})
+
+    if watchers_configuration:
+        data = json.dumps(watchers_configuration)
         headers.update({"Content-Type": "application/json"})
 
     return requests.request(
